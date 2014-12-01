@@ -1,0 +1,17 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+    {% if entity.name is defined %}
+    <h1>{{ entity.name }}</h1>
+    {% else %}
+    <h1>Новое событие</h1>
+    {% endif %}
+
+    <p>
+        <a href="{{ path('event') }}" class="btn btn-default">Назад</a>
+    </p>
+
+    {{ form(form) }}
+
+{% endblock %}

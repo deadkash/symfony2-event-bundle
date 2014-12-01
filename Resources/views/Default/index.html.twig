@@ -1,0 +1,32 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+    <h1>События</h1>
+
+    <p>
+        <a href="{{ path('event_new') }}" class="btn btn-default">Добавить</a>
+    </p>
+
+    <table class="table" style="margin-top: 15px;">
+        {% for entity in entities %}
+            <tr>
+                <td>
+                    <a href="{{ path('event_show', {id: entity.id}) }}">{{ entity.name }}</a>
+                    <br/>
+                    {% if entity.enabled %}
+                        <span class="label label-primary">Включено</span>
+                    {% else %}
+                        <span class="label label-default">Отключено</span>
+                    {% endif %}
+                </td>
+                <td style="width: 100px;">
+                    <a class="btn btn-default" href="{{ path('event_edit', {id: entity.id}) }}">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}

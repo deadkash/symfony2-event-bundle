@@ -1,0 +1,14 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+    <p>
+        <a class="btn btn-default" href="{{ path('event_show', {id: entity.id}) }}">Назад</a>
+    </p>
+
+    <h1>Последствие {% if consequence is defined %}"{{ consequence.name }}"{% endif %}</h1>
+    {% if consequence is defined %}<p>{{ consequence.description }}</p>{% endif %}
+
+    {{ form(params_form) }}
+
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends '::base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="/js/select2/select2.min.js"></script>
+    <script>
+        $('.sl2').select2();
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="/js/select2/select2.css"/>
+    <link rel="stylesheet" href="/js/select2/select2-bootstrap.css"/>
+{% endblock %}
+
+{% block body %}
+
+    <p>
+        <a class="btn btn-default" href="{{ path('event') }}">Назад</a>
+    </p>
+    <h1>{{ entity.name }} <small>/ {{ event.name }}</small>&nbsp;
+        <a class="btn btn-default btn-sm" href="{{ path('event_edit', {id: entity.id}) }}"><span class="glyphicon glyphicon-pencil"></span></a>
+        <form style="display: inline;" action="{{ path('event_delete', {id: entity.id}) }}" method="POST">
+            <input type="hidden" name="_method" value="DELETE" />
+            <button onclick="return confirm('Удалить?');" type="submit" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></button>
+        </form>
+    </h1>
+    {% if entity.enabled %}
+        <span class="label label-primary">Включено</span>
+    {% else %}
+        <span class="label label-default">Отключено</span>
+    {% endif %}
+
+    <h3>Обстоятельства</h3>
+
+    {{ form_start(conditions_form) }}
+    <div class="col-md-3" style="float: left; padding-left: 0;">
+        {{ form_widget(conditions_form.condition) }}
+    </div>
+    <div style="float: left; margin-top: -21px;">
+        {{ form_widget(conditions_form.submit) }}
+    </div>
+    <div class="clearfix"></div>
+    {{ form_end(conditions_form) }}
+
+    <table class="table" style="margin-top: 15px;">
+    {% for key, condition in conditions %}
+        <tr>
+            <td>{{ condition.view }}</td>
+            <td style="width: 90px;">
+                <a class="btn btn-default btn-sm" href="{{ path('condition_edit', {id: entity.id, conditionId: key}) }}"><span class="glyphicon glyphicon-pencil"></span></a>
+                <form style="display: inline;" action="{{ path('condition_delete', {id: entity.id, conditionId: key}) }}" method="POST">
+                    <input type="hidden" name="_method" value="DELETE" />
+                    <button onclick="return confirm('Удалить?');" class="btn btn-default btn-sm" type="submit"><span class="glyphicon glyphicon-remove"></span></button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+
+    <h3>Последствия</h3>
+
+    {{ form_start(consequences_form) }}
+    <div class="col-md-3" style="float: left; padding-left: 0;">
+        {{ form_widget(consequences_form.consequence) }}
+    </div>
+    <div style="float: left; margin-top: -21px;">
+        {{ form_widget(consequences_form.submit) }}
+    </div>
+    <div class="clearfix"></div>
+    {{ form_end(consequences_form) }}
+
+    <table class="table" style="margin-top: 15px;">
+    {% for key, consequence in consequences %}
+        <tr>
+            <td>{{ consequence.view|raw }}</td>
+            <td style="width: 90px;">
+                <a class="btn btn-default btn-sm" href="{{ path('consequence_edit', {id: entity.id, consequenceId: key}) }}"><span class="glyphicon glyphicon-pencil"></span></a>
+                <form style="display: inline;" action="{{ path('consequence_delete', {id: entity.id, consequenceId: key}) }}" method="POST">
+                    <input type="hidden" name="_method" value="DELETE" />
+                    <button onclick="return confirm('Удалить?');" class="btn btn-default btn-sm" type="submit"><span class="glyphicon glyphicon-remove"></span></button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+    <p>
+        <a class="btn btn-default" href="{{ path('event_show', {id: entity.id}) }}">Назад</a>
+    </p>
+
+    <h1>Обстоятельство "{{ condition.name }}"</h1>
+    <p>{{ condition.description }}</p>
+
+    {{ form(params_form) }}
+
+{% endblock %}
